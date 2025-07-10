@@ -82,10 +82,10 @@
 }
 
 .tile {
-  width: 10vh;
-  height: 10vh;
+  width: 7vh;
+  height: 7vh;
   border: 2px solid black;
-  font-size: 7vh;
+  font-size: 5vh;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -93,17 +93,64 @@
   color: black;
 }
 
-.correct {
+.keyboard {
+  margin-top: 4vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1vh;
+}
+
+.key-row {
+  display: flex;
+  gap: 5px;
+}
+
+.key {
+  width: 4vh;
+  height: 6vh;
+  border-radius: 4px;
+  background-color: lightgray;
+  color: black;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  text-transform: uppercase;
+  user-select: none;
+  border: 1px solid black;
+}
+
+.correct,
+.close,
+.incorrect,
+.key.correct,
+.key.close,
+.key.incorrect {
+  color: white;
+}
+
+/* Specific colors */
+.correct,
+.key.correct {
   background-color: lightgreen;
-  color: white;
 }
 
-.close {
+.close,
+.key.close {
   background-color: orange;
-  color: white;
 }
 
-.incorrect {
+.incorrect,
+.key.incorrect {
   background-color: gray;
-  color: white;
+}
+
+/* Keyboard layout */
+.keyboard {
+  margin-top: 4vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1vh;
 }

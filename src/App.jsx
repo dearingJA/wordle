@@ -19,6 +19,7 @@ function App() {
   const [validWords, setValidWords] = useState([]);
 
   const [showStartScreen, setShowStartScreen] = useState(true);
+  const [usedKeys, setUsedKeys] = useState({});
 
   // fetch valid words
   useEffect(() => {
@@ -47,6 +48,24 @@ function App() {
           alert('Invalid guess. Enter real word.');
           return;
         } 
+        
+      const newUsedKeys = { ...usedKeys };
+      for (let i = 0; i < WORD_LENGTH; i++) {
+        const char = currentGuess[i];
+        if (solution[i] === char) {
+          newUsedKeys[char] = 'correct';
+        } else if (solution.includes(char)) {
+          if (newUsedKeys[char] !== 'correct') {
+            newUsedKeys[char] = 'close';
+          }
+        } else {
+          if (!newUsedKeys[char]) {
+            newUsedKeys[char] = 'incorrect';
+          }
+        }
+      }
+
+      setUsedKeys(newUsedKeys);
 
         const newGuesses = [...guesses];
         newGuesses[guesses.findIndex(val => val == null)] = currentGuess;
@@ -104,7 +123,7 @@ function App() {
       {showStartScreen ? (
         <div className="start-screen">
 
-          <button onClick={() => startGameWithWord('hello')}>
+          <button onClick={() => startGameWithWord('close')}>
             Assigned Word
           </button>
 
@@ -139,10 +158,37 @@ function App() {
               <p>Correct Word: <strong>{solution.toUpperCase()}</strong></p>
             </div>
           )}
+
+          <Keyboard usedKeys={usedKeys} />
         </>
       )}
     </div>
 
+  );
+}
+
+function Keyboard ({ usedKeys }) {
+  const rows = [
+    'q w e r t y u i o p',
+    'a s d f g h j k l',
+    'z x c v b n m'
+  ];
+
+  return (
+    <div className='keyboard'>
+      {rows.map((row, i) => (
+        <div key={i} className='key-row'>
+          {row.split(' ').map((key) => {
+            const status = usedKeys[key];
+            return (
+              <div key={key} className={`key ${status ?? ''}`}>
+                {key}
+              </div>
+            );
+          })}
+        </div>
+      ))}
+    </div>
   );
 }
 
